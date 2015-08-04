@@ -7,6 +7,7 @@
 package nuovo;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.Objects;
 
 /**
@@ -70,7 +71,23 @@ public class Contiene implements Serializable {
         this.pianta_default = pianta_default;
         this.nome=nome;
     }
-
+    
+    public void leggiDatidaDB() throws SQLException, ClassNotFoundException, MyException {
+        ContieneDAO.load(this);
+    }
+    
+    public void inserisciDatisuDB() throws SQLException, ClassNotFoundException, MyException {
+        ContieneDAO.insert(this);
+    }
+    
+    public void aggiornaDatisuDB() throws SQLException, ClassNotFoundException, MyException {
+        ContieneDAO.update(this);
+    }
+    
+    public void cancellaDatisuDB() throws SQLException, ClassNotFoundException, MyException {
+        ContieneDAO.delete(this);
+    }
+    
     private String utente;
     private String pianta_default;
     private String nome;

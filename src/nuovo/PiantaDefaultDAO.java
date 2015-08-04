@@ -10,7 +10,7 @@ public class PiantaDefaultDAO {
     
     private PiantaDefaultDAO() {}
     
-    private static final String INSERT_SQL="INSERT INTO PIANTA_DEFAULT VALUES (?, ?, ?, ?, ?, ?)";
+    private static final String INSERT_SQL="INSERT INTO PIANTADEFAULT VALUES (?, ?, ?, ?, ?, ?)";
     
     public static void insert(PiantaDefault piantaDefault) throws MyException {
         Connection con=null;
@@ -23,7 +23,7 @@ public class PiantaDefaultDAO {
             pstmt.setString(2, piantaDefault.getTipologia());
             pstmt.setString(3, piantaDefault.getColore_fioritura());
             pstmt.setString(4, piantaDefault.getDescrizione_acqua());
-            pstmt.setString(5, piantaDefault.getFoto);
+            pstmt.setString(5, piantaDefault.getFoto());
             pstmt.setString(6, piantaDefault.getFamiglia());
             pstmt.executeUpdate();
         }
@@ -54,7 +54,7 @@ public class PiantaDefaultDAO {
         }
     }
     
-     private static final String FIND_BY_NAME ="SELECT * FROM PIANTA_DEFAULT WHERE NOME = ?";
+     private static final String FIND_BY_NAME ="SELECT * FROM PIANTADEFAULT WHERE NOME = ?";
     public static void load(PiantaDefault piantaDefault) throws MyException {
         Connection con=null;
         PreparedStatement pstmt=null;
@@ -62,7 +62,7 @@ public class PiantaDefaultDAO {
         try {
             con = ConnectionManager.getConnection();
             pstmt = con.prepareStatement(FIND_BY_NAME);
-            pstmt.setString(1, utente.getNome());
+            pstmt.setString(1, piantaDefault.getNome());
             rs=pstmt.executeQuery();
             rs.next();
             piantaDefault.setTipologia(rs.getString("TIPOLOGIA"));
@@ -98,7 +98,7 @@ public class PiantaDefaultDAO {
         }
     }
     
-    private static final String UPDATE_BY_NAME = "UPDATE PIANTA_DEFAULT SET NOME=?,TIPOLOGIA=?,COLORE_FIORITURA=?,DESCRIZIONE_ACQUA=?,FOTO=?,FAMIGLIA=?";
+    private static final String UPDATE_BY_NAME = "UPDATE PIANTADEFAULT SET NOME=?,TIPOLOGIA=?,COLORE_FIORITURA=?,DESCRIZIONE_ACQUA=?,FOTO=?,FAMIGLIA=?";
     public static void update(PiantaDefault piantaDefault) throws MyException {
     Connection con=null;
     PreparedStatement pstmt=null;
@@ -106,12 +106,12 @@ public class PiantaDefaultDAO {
     try {
         con = ConnectionManager.getConnection();
         pstmt = con.prepareStatement(UPDATE_BY_NAME);
-        pstmt.setString(1, utente.getNome());
-            pstmt.setString(2, piantaDefault.getTipologia());
-            pstmt.setString(3, piantaDefault.getColore_fioritura());
-            pstmt.setString(4, piantaDefault.getDescrizione_acqua());
-            pstmt.setString(5, piantaDefault.getFoto);
-            pstmt.setString(6, piantaDefault.getFamiglia());
+        pstmt.setString(1, piantaDefault.getNome());
+        pstmt.setString(2, piantaDefault.getTipologia());
+        pstmt.setString(3, piantaDefault.getColore_fioritura());
+        pstmt.setString(4, piantaDefault.getDescrizione_acqua());
+        pstmt.setString(5, piantaDefault.getFoto());
+        pstmt.setString(6, piantaDefault.getFamiglia());
         pstmt.executeUpdate();
     }
     
@@ -141,7 +141,7 @@ public class PiantaDefaultDAO {
         }
     }
     
-    private static final String DELETE_BY_NAME="DELETE * FROM PIANTA_DEFAULT WHERE NOME= ?";
+    private static final String DELETE_BY_NAME="DELETE * FROM PIANTADEFAULT WHERE NOME= ?";
     public static void delete(PiantaDefault piantaDefault) throws MyException {
         Connection con=null;
         PreparedStatement pstmt=null;
