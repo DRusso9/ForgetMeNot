@@ -6,18 +6,48 @@
 
 package nuovo;
 
+import java.io.Serializable;
+import java.sql.SQLException;
+import java.util.Objects;
+
 /**
  *
  * @author daniele
  */
-public class Contiene {
+public class Contiene implements Serializable {
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 79 * hash + Objects.hashCode(this.utente);
+        hash = 79 * hash + Objects.hashCode(this.nome);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Contiene other = (Contiene) obj;
+        if (!Objects.equals(this.utente, other.utente)) {
+            return false;
+        }
+        if (!Objects.equals(this.nome, other.nome)) {
+            return false;
+        }
+        return true;
+    }
 
     public String getUtente() {
         return utente;
     }
     
-    public String getPianta_personale() {
-        return pianta_personale;
+    public String getNome() {
+        return nome;
     }
 
     public String getPianta_default() {
@@ -32,18 +62,34 @@ public class Contiene {
         this.pianta_default = pianta_default;
     }
     
-    public void setPianta_personale(String pianta_personale) {
-        this.pianta_personale = pianta_personale;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public Contiene(String utente, String pianta_default, String pianta_personale) {
+    public Contiene(String utente, String pianta_default, String nome) {
         this.utente = utente;
         this.pianta_default = pianta_default;
-        this.pianta_personale=pianta_personale;
+        this.nome=nome;
     }
-
+    
+    public void leggiDatidaDB() throws SQLException, ClassNotFoundException, MyException {
+        ContieneDAO.load(this);
+    }
+    
+    public void inserisciDatisuDB() throws SQLException, ClassNotFoundException, MyException {
+        ContieneDAO.insert(this);
+    }
+    
+    public void aggiornaDatisuDB() throws SQLException, ClassNotFoundException, MyException {
+        ContieneDAO.update(this);
+    }
+    
+    public void cancellaDatisuDB() throws SQLException, ClassNotFoundException, MyException {
+        ContieneDAO.delete(this);
+    }
+    
     private String utente;
     private String pianta_default;
-    private String pianta_personale;
+    private String nome;
     
 }

@@ -6,11 +6,37 @@
 
 package nuovo;
 
+import java.io.Serializable;
+import java.sql.SQLException;
+import java.util.Objects;
+
 /**
  *
  * @author daniele
  */
-public class PiantaDefault {
+public class PiantaDefault implements Serializable {
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 41 * hash + Objects.hashCode(this.nome);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final PiantaDefault other = (PiantaDefault) obj;
+        if (!Objects.equals(this.nome, other.nome)) {
+            return false;
+        }
+        return true;
+    }
    
     private String nome;
     private String tipologia;
@@ -75,5 +101,21 @@ public class PiantaDefault {
 
     public void setFamiglia(String famiglia) {
         this.famiglia = famiglia;
+    }
+    
+    public void leggiDatidaDB() throws SQLException, ClassNotFoundException, MyException {
+        PiantaDefaultDAO.load(this);
+    }
+    
+    public void inserisciDatisuDB() throws SQLException, ClassNotFoundException, MyException {
+        PiantaDefaultDAO.insert(this);
+    }
+    
+    public void aggiornaDatisuDB() throws SQLException, ClassNotFoundException, MyException {
+        PiantaDefaultDAO.update(this);
+    }
+    
+    public void cancellaDatisuDB() throws SQLException, ClassNotFoundException, MyException {
+        PiantaDefaultDAO.delete(this);
     }
 }
